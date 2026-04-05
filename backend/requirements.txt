@@ -1,10 +1,10 @@
-Flask==3.0.0
+Flask==2.3.3
 flask-cors==4.0.0
 Flask-SQLAlchemy==3.1.1
 SQLAlchemy==2.0.23
 PyJWT==2.8.0
-Werkzeug==3.0.1
-pandas==2.1.4 
-numpy==1.26.2
+Werkzeug==2.3.7
+pandas==2.0.3
+numpy==1.24.4
 python-dotenv==1.0.0
 gunicorn==21.2.0
