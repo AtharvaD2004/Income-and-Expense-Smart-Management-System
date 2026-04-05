@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ie-manager-backend
+    env: python
+    plan: free
+    pythonVersion: "3.11.9"
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: PYTHON_VERSION
+        value: "3.11.9"
