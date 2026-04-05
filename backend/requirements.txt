@@ -1,8 +1,8 @@
-Flask==2.3.3
-flask-cors==4.0.0
-Flask-SQLAlchemy==3.1.1
-SQLAlchemy==2.0.23
-PyJWT==2.8.0
-Werkzeug==2.3.7
-python-dotenv==1.0.0
-gunicorn==21.2.0
+Flask
+flask-cors
+Flask-SQLAlchemy
+SQLAlchemy
+PyJWT
+Werkzeug
+python-dotenv
+gunicorn
