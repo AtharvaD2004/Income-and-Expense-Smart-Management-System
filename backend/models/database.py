@@ -6,22 +6,43 @@ db = SQLAlchemy()
 TRANSACTION_TYPES = ["income", "expense", "investment"]
 
 CATEGORIES = {
-    "income":     ["Salary", "Freelance", "Business", "Other"],
-    "expense":    ["Food", "Transport", "Shopping", "Bills", "Health", "Education", "Entertainment", "Other"],
-    "investment": ["Stocks", "Real Estate", "Education", "Other"]
+    "income": [
+        "Salary", "Freelance", "Business", "Rental Income", "Bonus", "Other"
+    ],
+    "expense": [
+        "Food & Dining", "Transport", "Shopping", "Health", "Education",
+        "Entertainment", "Electricity Bill", "Water Bill", "Gas Bill",
+        "Maintenance", "Rent", "Loan EMI", "Insurance Premium",
+        "Phone Bill", "Internet Bill", "Other"
+    ],
+    "investment": [
+        "Stocks", "Mutual Funds", "SIP", "PPF", "Fixed Deposit",
+        "LIC / Life Insurance", "Real Estate", "ELSS", "Gold", "NPS",
+        "Other Investment"
+    ]
 }
+
+# Flat list of ALL valid categories across all types (for flexible validation)
+ALL_CATEGORIES = [cat for cats in CATEGORIES.values() for cat in cats]
+
 
 class User(db.Model):
     __tablename__ = "users"
-    id         = db.Column(db.Integer, primary_key=True)
-    name       = db.Column(db.String(100), nullable=False)
-    email      = db.Column(db.String(150), nullable=False, unique=True, index=True)
-    password   = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    id           = db.Column(db.Integer, primary_key=True)
+    name         = db.Column(db.String(100), nullable=False)
+    email        = db.Column(db.String(150), nullable=False, unique=True, index=True)
+    password     = db.Column(db.String(255), nullable=False)
+    created_at   = db.Column(db.DateTime, default=datetime.utcnow)
     transactions = db.relationship("Transaction", backref="user", lazy=True, cascade="all, delete-orphan")
 
     def to_dict(self):
-        return {"id": self.id, "name": self.name, "email": self.email, "created_at": self.created_at.isoformat()}
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            "created_at": self.created_at.isoformat()
+        }
+
 
 class Transaction(db.Model):
     __tablename__ = "transactions"
@@ -36,8 +57,11 @@ class Transaction(db.Model):
 
     def to_dict(self):
         return {
-            "id": self.id, "description": self.description,
-            "amount": self.amount, "category": self.category,
-            "type": self.type, "date": self.date.isoformat(),
+            "id": self.id,
+            "description": self.description,
+            "amount": self.amount,
+            "category": self.category,
+            "type": self.type,
+            "date": self.date.isoformat(),
             "created_at": self.created_at.isoformat()
         }
